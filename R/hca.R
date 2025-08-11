@@ -80,22 +80,22 @@ hca_groups = function(x, return.steps = F, ...) {
     .hca(x, ...)$groups
 }
 
-#' #' @rdname hca
-#' #' @export 
-#' hca_reorder = function(x,
-#'                        col = T,
-#'                        row = T,
-#'                        cor.method = 'none',
-#'                        ...) {
-#'   
-#'   if (col) x = x[, .hca(x = x, hclust.end = T, cor.method = cor.method, ...)$order]
-#'   if (row) x = x[.hca(x = t(x), hclust.end = T, cor.method = cor.method, ...)$order, ]
-#'   x
-#' }
+#' @rdname hca
+#' @export 
+hca_reorder = function(x,
+                       col = T,
+                       row = T,
+                       cor.method = 'none',
+                       ...) {
+  
+  if (col) x = x[, .hca(x = x, hclust.end = T, cor.method = cor.method, ...)$order]
+  if (row) x = x[.hca(x = t(x), hclust.end = T, cor.method = cor.method, ...)$order, ]
+  x
+}
 
 #' @rdname hca
 #' @export
-hca_reorder = function(x,
+hca_reorder_fixed = function(x,
                        col = T,
                        row = T,
                        cor.method = 'none',
