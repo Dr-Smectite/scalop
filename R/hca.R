@@ -94,7 +94,8 @@ hca_reorder = function(x,
 }
 
 #' @rdname hca
-#' @export 
+#' @aliases hca_reorder_fixed
+#' @export
 hca_reorder_fixed = function(x,
                              col = TRUE,
                              row = TRUE,
