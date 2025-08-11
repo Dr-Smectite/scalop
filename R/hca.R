@@ -93,3 +93,51 @@ hca_reorder = function(x,
     if (row) x = x[.hca(x = t(x), hclust.end = T, cor.method = cor.method, ...)$order, ]
     x
 }
+
+#' @rdname hca
+#' @export 
+hca_reorder_fixed = function(x,
+                             col = TRUE,
+                             row = TRUE,
+                             cor.method = 'none',
+                             dist.method = scalop::dist.methods,
+                             cluster.method = scalop::cluster.methods,
+                             max.dist = 1,
+                             ...) {
+  # 保存原始矩阵
+  orig <- x
+
+  # 1. 先算列的顺序（基于 orig）
+  if (col) {
+    ord_col <- .hca(
+      x            = orig,
+      cor.method   = cor.method,
+      dist.method  = dist.method,
+      cluster.method = cluster.method,
+      max.dist     = max.dist,
+      hclust.end   = TRUE,
+      ...
+    )$order
+
+    # 对 x（而非 orig）做列重排
+    x <- x[, ord_col, drop = FALSE]
+  }
+
+  # 2. 再算行的顺序（仍然基于 orig）
+  if (row) {
+    ord_row <- .hca(
+      x            = t(orig),
+      cor.method   = cor.method,
+      dist.method  = dist.method,
+      cluster.method = cluster.method,
+      max.dist     = max.dist,
+      hclust.end   = TRUE,
+      ...
+    )$order
+
+    # 对已经重排过列的 x 做行重排
+    x <- x[ord_row, , drop = FALSE]
+  }
+
+  x
+}
