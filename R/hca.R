@@ -97,36 +97,17 @@ hca_reorder = function(x,
 #' @aliases hca_reorder_fixed
 #' @export
 hca_reorder_fixed = function(x,
-                             col = TRUE,
-                             row = TRUE,
+                             col = T,
+                             row = T,
                              cor.method = 'none',
-                             dist.method = scalop::dist.methods,
-                             cluster.method = scalop::cluster.methods,
-                             max.dist = 1,
                              ...) {
   orig <- x
   if (col) {
-    ord_col <- .hca(
-      x            = orig,
-      cor.method   = cor.method,
-      dist.method  = dist.method,
-      cluster.method = cluster.method,
-      max.dist     = max.dist,
-      hclust.end   = TRUE,
-      ...
-    )$order
+    ord_col <- .hca(x = orig, hclust.end = T, cor.method = cor.method, ...)$order
     x <- x[, ord_col, drop = FALSE]
   }
   if (row) {
-    ord_row <- .hca(
-      x            = t(orig),
-      cor.method   = cor.method,
-      dist.method  = dist.method,
-      cluster.method = cluster.method,
-      max.dist     = max.dist,
-      hclust.end   = TRUE,
-      ...
-    )$order
+    ord_row <- .hca(x = t(orig), hclust.end = T, cor.method = cor.method, ...)$order
     x <- x[ord_row, , drop = FALSE]
   }
   x
