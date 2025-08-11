@@ -80,7 +80,6 @@ hca_groups = function(x, return.steps = F, ...) {
     .hca(x, ...)$groups
 }
 
-
 #' @rdname hca
 #' @export 
 hca_reorder = function(x,
@@ -104,10 +103,7 @@ hca_reorder_fixed = function(x,
                              cluster.method = scalop::cluster.methods,
                              max.dist = 1,
                              ...) {
-  # 保存原始矩阵
   orig <- x
-
-  # 1. 先算列的顺序（基于 orig）
   if (col) {
     ord_col <- .hca(
       x            = orig,
@@ -118,12 +114,8 @@ hca_reorder_fixed = function(x,
       hclust.end   = TRUE,
       ...
     )$order
-
-    # 对 x（而非 orig）做列重排
     x <- x[, ord_col, drop = FALSE]
   }
-
-  # 2. 再算行的顺序（仍然基于 orig）
   if (row) {
     ord_row <- .hca(
       x            = t(orig),
@@ -134,10 +126,7 @@ hca_reorder_fixed = function(x,
       hclust.end   = TRUE,
       ...
     )$order
-
-    # 对已经重排过列的 x 做行重排
     x <- x[ord_row, , drop = FALSE]
   }
-
   x
 }
